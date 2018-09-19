@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 使用对应的Dao层的接口 -->
+<mapper namespace="com.qianfeng.dao.IResourcesDao">
+
+	<resultMap type="Resources" id="resMap">
+		<id property="resid" column="resid"/>
+		<!-- 其他字段的映射关系 -->
+		<result property="resname" column="resname" />
+		<result property="resdesc" column="resdesc" />
+		<result property="restype" column="restype" />
+		<result property="url" column="url" />
+	</resultMap>
+	
+	
+	<select id="findByUname" parameterType="string" resultMap="resMap">
+		select DISTINCT res.* from user u
+		inner join user_role ur
+		on u.uid=ur.uid
+		inner join role_res rr
+		on ur.rid=rr.rid
+		inner join resources res
+		on rr.resid=res.resid
+		where u.uname=#{name}
+	</select>
+	
+</mapper>
+
+
+
+
